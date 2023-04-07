@@ -1,7 +1,7 @@
-const gameBoard = (() => {
+const GameBoard = (() => {
   const board = Array(3)
   for (let i = 0; i < board.length; i++) {
-    board[i] = [0, 0, 0]
+    board[i] = [' ', ' ', ' ']
   }
 
   const getBoard = () => {
