@@ -1,7 +1,7 @@
 const board = (() => {
   const boardArray = Array(3)
   for (let i = 0; i < boardArray.length; i++) {
-    boardArray[i] = ['X', 'O', ' ']
+    boardArray[i] = [' ', ' ', ' ']
   }
 
   const playerTokens = ['X', 'O']
@@ -28,6 +28,13 @@ const board = (() => {
 const display = (() => {
   const boardDiv = document.querySelector('.board')
 
+  const clickHandler = event => {
+    const x = event.target.dataset.x
+    const y = event.target.dataset.y
+
+    board.playMove(x, y)
+  }
+
   const update = () => {
     // clear previous content from boardDiv
     while (boardDiv.firstChild) {
@@ -49,6 +56,7 @@ const display = (() => {
         }
         squareDiv.dataset.x = i
         squareDiv.dataset.y = j
+        squareDiv.addEventListener('click', clickHandler)
         rowDiv.appendChild(squareDiv)
 
         j++
