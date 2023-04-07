@@ -1,14 +1,28 @@
 const board = (() => {
-  const board = Array(3)
-  for (let i = 0; i < board.length; i++) {
-    board[i] = ['X', 'O', ' ']
+  const boardArray = Array(3)
+  for (let i = 0; i < boardArray.length; i++) {
+    boardArray[i] = ['X', 'O', ' ']
   }
+
+  const playerTokens = ['X', 'O']
+  let player = 0
 
   const getBoard = () => {
-    return board.map(elem => [...elem]) // return deep copy of board
+    return boardArray.map(elem => [...elem]) // return deep copy of boardArray
   }
 
-  return { getBoard }
+  const playMove = (x, y) => {
+    const token = playerTokens[player]
+
+    if (boardArray[x][y] === ' ') {
+      boardArray[x][y] = token
+    }
+
+    display.update()
+    player = (player + 1) % 2
+  }
+
+  return { getBoard, playMove }
 })()
 
 const display = (() => {
@@ -37,4 +51,6 @@ const display = (() => {
   }
 
   update()
+
+  return { update }
 })()
