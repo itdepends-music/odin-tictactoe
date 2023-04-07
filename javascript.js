@@ -37,5 +37,4 @@ const display = (() => {
   }
 
   update()
-  update()
 })()
