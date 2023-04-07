@@ -18,8 +18,69 @@ const board = (() => {
       boardArray[x][y] = token
     }
 
+    checkWin()
     display.update()
     player = (player + 1) % 2
+  }
+
+  const checkWin = () => {
+    for (const token of playerTokens) {
+      // check horizontal
+      for (const row of boardArray) {
+        let isWin = true
+        for (const square of row) {
+          if (square !== token) {
+            isWin = false
+          }
+        }
+        if (isWin) {
+          handleWin(token)
+          break
+        }
+      }
+
+      // check vertical
+      for (let i = 0; i < 3; i++) {
+        let isWin = true
+        for (const row of boardArray) {
+          if (row[i] !== token) {
+            isWin = false
+          }
+        }
+        if (isWin) {
+          handleWin(token)
+          break
+        }
+      }
+
+      // check top right to bottom left
+      let isWin = true
+      for (let i = 0; i < 3; i++) {
+        if (boardArray[i][2 - i] !== token) {
+          isWin = false
+        }
+      }
+      if (isWin) {
+        handleWin(token)
+        break
+      }
+
+      // check top left to bottom right
+      isWin = true
+      for (let i = 0; i < 3; i++) {
+        if (boardArray[i][i] !== token) {
+          isWin = false
+        }
+      }
+      if (isWin) {
+        handleWin(token)
+        break
+      }
+    }
+  }
+
+  const handleWin = playerToken => {
+    console.log(`Player with token ${playerToken} won`)
   }
 
   return { getBoard, playMove }
