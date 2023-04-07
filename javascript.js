@@ -34,9 +34,12 @@ const display = (() => {
       boardDiv.removeChild(boardDiv.firstChild)
     }
 
+    let i = 0
     for (const row of board.getBoard()) {
       const rowDiv = document.createElement('div')
       rowDiv.classList.add('row')
+
+      let j = 0
       for (const square of row) {
         const squareDiv = document.createElement('button')
         squareDiv.classList.add('square')
@@ -44,9 +47,14 @@ const display = (() => {
         if (squareDiv.textContent !== ' ') {
           squareDiv.disabled = true
         }
+        squareDiv.dataset.x = i
+        squareDiv.dataset.y = j
         rowDiv.appendChild(squareDiv)
+
+        j++
       }
       boardDiv.appendChild(rowDiv)
+      i++
     }
   }
 
