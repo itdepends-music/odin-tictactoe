@@ -1,4 +1,4 @@
-const GameBoard = (() => {
+const board = (() => {
   const board = Array(3)
   for (let i = 0; i < board.length; i++) {
     board[i] = [' ', ' ', ' ']
