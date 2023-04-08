@@ -1,7 +1,12 @@
 const board = (() => {
   const boardArray = Array(3)
-  for (let i = 0; i < boardArray.length; i++) {
-    boardArray[i] = [' ', ' ', ' ']
+
+  // resetBoard() does not call display.update()
+  // This is instead managed by display.displayWin()
+  const resetBoard = () => {
+    for (let i = 0; i < boardArray.length; i++) {
+      boardArray[i] = [' ', ' ', ' ']
+    }
   }
 
   const playerTokens = ['X', 'O']
@@ -59,9 +64,13 @@ const board = (() => {
 
   const handleWin = playerToken => {
     console.log(`Player with token ${playerToken} won`)
+    resetBoard()
+    display.displayWin()
   }
 
-  return { getBoard, playMove }
+  resetBoard()
+
+  return { getBoard, playMove, resetBoard }
 })()
 
 const display = (() => {
@@ -105,7 +114,11 @@ const display = (() => {
     }
   }
 
+  const displayWin = () => {
+    update()
+  }
+
   update()
 
-  return { update }
+  return { update, displayWin }
 })()
