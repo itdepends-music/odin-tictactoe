@@ -74,7 +74,6 @@ const board = (() => {
   }
 
   const handleWin = playerToken => {
-    console.log(`Player with token ${playerToken} won`)
     resetBoard()
     display.displayWin()
   }
