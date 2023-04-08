@@ -64,7 +64,7 @@ const board = (() => {
     let isDraw = true
     for (const row of boardArray) {
       for (const val of row) {
-        if (val !== ' ') isDraw = false
+        if (val === ' ') isDraw = false
       }
     }
 
