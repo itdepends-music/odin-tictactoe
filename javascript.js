@@ -25,56 +25,34 @@ const board = (() => {
 
   const checkWin = () => {
     for (const token of playerTokens) {
-      // check horizontal
-      for (const row of boardArray) {
-        let isWin = true
-        for (const square of row) {
-          if (square !== token) {
-            isWin = false
-          }
-        }
-        if (isWin) {
-          handleWin(token)
-          break
-        }
-      }
-
-      // check vertical
-      for (let i = 0; i < 3; i++) {
-        let isWin = true
-        for (const row of boardArray) {
-          if (row[i] !== token) {
-            isWin = false
-          }
-        }
-        if (isWin) {
-          handleWin(token)
-          break
-        }
-      }
-
-      // check top right to bottom left
-      let isWin = true
-      for (let i = 0; i < 3; i++) {
-        if (boardArray[i][2 - i] !== token) {
-          isWin = false
-        }
-      }
-      if (isWin) {
-        handleWin(token)
-        break
-      }
-
-      // check top left to bottom right
-      isWin = true
+      let isTopLeftToBottomRight = true
+      let isTopRightToBottomLeft = true
       for (let i = 0; i < 3; i++) {
         if (boardArray[i][i] !== token) {
-          isWin = false
+          isTopLeftToBottomRight = false
+        }
+        if (boardArray[i][2 - i] !== token) {
+          isTopRightToBottomLeft = false
+        }
+
+        let isHorz = true
+        let isVert = true
+        for (let j = 0; j < 3; j++) {
+          if (boardArray[i][j] !== token) {
+            isHorz = false
+          }
+          if (boardArray[j][i] !== token) {
+            isVert = false
+          }
+        }
+        if (isHorz || isVert) {
+          handleWin(token)
+          return
         }
       }
-      if (isWin) {
+      if (isTopLeftToBottomRight || isTopRightToBottomLeft) {
         handleWin(token)
-        break
+        return
       }
     }
   }
