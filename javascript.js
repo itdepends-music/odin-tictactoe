@@ -121,6 +121,14 @@ const display = (() => {
     }
   }
 
+  const displayMessage = text => {
+    clearBoard()
+    const messageElem = document.createElement('p')
+    messageElem.classList.add('message')
+    messageElem.textContent = text
+    boardDiv.appendChild(messageElem)
+  }
+
   const clearBoard = () => {
     while (boardDiv.firstChild) {
       boardDiv.removeChild(boardDiv.firstChild)
@@ -133,5 +141,5 @@ const display = (() => {
 
   update()
 
-  return { update, displayWin }
+  return { update, displayWin, displayMessage }
 })()

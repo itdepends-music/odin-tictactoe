@@ -80,3 +80,9 @@ h1 {
   margin: 2px;
   height: 26px;
 }
+
+.message {
+  text-align: center;
+  width: 620px;
+  text-transform: uppercase;
+}
