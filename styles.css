@@ -38,11 +38,13 @@ h1 {
   cursor: pointer;
 }
 
-.square:hover {
+.square:hover,
+.playernames button:hover {
   background-color: #585b70;
 }
 
-.square:active {
+.square:active,
+.playernames button:active {
   color: #11111b;
   background-color: #cdd6f4;
 }
@@ -51,4 +53,30 @@ h1 {
   cursor: default;
   background-color: inherit;
   color: inherit;
+}
+
+.playernames {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding: 32px 0;
+  grid-gap: 16px;
+  align-items: center;
+  margin-top: auto;
+}
+
+.playernames input,
+.playernames button {
+  height: 22px;
+  border: 1px solid #cdd6f4;
+  outline: none;
+  background-color: #11111b;
+  color: #cdd6f4;
+  padding: 2px;
+}
+
+.playernames button {
+  grid-column-end: span 2;
+  cursor: pointer;
+  margin: 2px;
+  height: 26px;
 }
