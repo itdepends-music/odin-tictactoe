@@ -94,10 +94,7 @@ const display = (() => {
   }
 
   const update = () => {
-    // clear previous content from boardDiv
-    while (boardDiv.firstChild) {
-      boardDiv.removeChild(boardDiv.firstChild)
-    }
+    clearBoard()
 
     let i = 0
     for (const row of board.getBoard()) {
@@ -121,6 +118,12 @@ const display = (() => {
       }
       boardDiv.appendChild(rowDiv)
       i++
+    }
+  }
+
+  const clearBoard = () => {
+    while (boardDiv.firstChild) {
+      boardDiv.removeChild(boardDiv.firstChild)
     }
   }
 
