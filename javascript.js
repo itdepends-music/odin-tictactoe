@@ -1,8 +1,6 @@
 const board = (() => {
   const boardArray = Array(3)
 
-  // resetBoard() does not call display.update()
-  // This is instead managed by display.displayWin()
   const resetBoard = () => {
     for (let i = 0; i < boardArray.length; i++) {
       boardArray[i] = [' ', ' ', ' ']
@@ -90,10 +88,6 @@ const board = (() => {
     playerNames = [player1, player2]
   }
 
-  const getPlayerNames = () => {
-    return [...playerNames]
-  }
-
   const newGame = (player1Name, player2Name) => {
     resetBoard()
     editPlayerNames(player1Name, player2Name)
@@ -106,8 +100,6 @@ const board = (() => {
     getBoard,
     playMove,
     resetBoard,
-    editPlayerNames,
-    getPlayerNames,
     newGame
   }
 })()
@@ -192,5 +184,5 @@ const display = (() => {
 
   displayMessage('press new game to begin')
 
-  return { update, displayWin, displayMessage }
+  return { update, displayWin }
 })()
