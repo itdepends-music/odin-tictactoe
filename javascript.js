@@ -7,9 +7,11 @@ const board = (() => {
     for (let i = 0; i < boardArray.length; i++) {
       boardArray[i] = [' ', ' ', ' ']
     }
+    player = 0 // X traditionally plays first
   }
 
   const playerTokens = ['X', 'O']
+  let playerNames = ['Player 1', 'Player 2']
   let player = 0
 
   const getBoard = () => {
@@ -23,9 +25,9 @@ const board = (() => {
       boardArray[x][y] = token
     }
 
-    checkWin()
-    display.update()
     player = (player + 1) % 2
+    display.update()
+    checkWin()
   }
 
   const checkWin = () => {
@@ -74,13 +76,27 @@ const board = (() => {
   }
 
   const handleWin = playerToken => {
-    resetBoard()
-    display.displayWin()
+    const playerNum = playerTokens.indexOf(playerToken)
+    let playerName
+    if (playerNum === -1) {
+      playerName = 'draw'
+    } else {
+      playerName = playerNames[playerNum]
+    }
+    display.displayWin(playerName)
+  }
+
+  const editPlayerNames = (player1, player2) => {
+    playerNames = [player1, player2]
+  }
+
+  const getPlayerNames = () => {
+    return [...playerNames]
   }
 
   resetBoard()
 
-  return { getBoard, playMove, resetBoard }
+  return { getBoard, playMove, resetBoard, editPlayerNames, getPlayerNames }
 })()
 
 const display = (() => {
@@ -135,11 +151,15 @@ const display = (() => {
     }
   }
 
-  const displayWin = () => {
-    update()
+  const displayWin = playerName => {
+    if (playerName === 'draw') {
+      displayMessage('draw')
+    } else {
+      displayMessage(`${playerName} won!!`)
+    }
   }
 
-  update()
+  displayMessage('press new game to begin')
 
   return { update, displayWin, displayMessage }
 })()
