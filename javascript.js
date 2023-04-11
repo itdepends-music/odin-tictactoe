@@ -94,13 +94,27 @@ const board = (() => {
     return [...playerNames]
   }
 
+  const newGame = (player1Name, player2Name) => {
+    resetBoard()
+    editPlayerNames(player1Name, player2Name)
+    display.update()
+  }
+
   resetBoard()
 
-  return { getBoard, playMove, resetBoard, editPlayerNames, getPlayerNames }
+  return {
+    getBoard,
+    playMove,
+    resetBoard,
+    editPlayerNames,
+    getPlayerNames,
+    newGame
+  }
 })()
 
 const display = (() => {
   const boardDiv = document.querySelector('.board')
+  const newGameButton = document.querySelector('#newgame')
 
   const clickHandler = event => {
     const x = event.target.dataset.x
@@ -158,6 +172,23 @@ const display = (() => {
       displayMessage(`${playerName} won!!`)
     }
   }
+
+  const newGameHandler = e => {
+    e.preventDefault()
+
+    const player1Input = document.querySelector('#player1')
+    const player2Input = document.querySelector('#player2')
+
+    let player1Name = player1Input.value
+    let player2Name = player2Input.value
+
+    player1Name = player1Name === '' ? 'Player 1' : player1Name
+    player2Name = player2Name === '' ? 'Player 2' : player2Name
+
+    board.newGame(player1Name, player2Name)
+  }
+
+  newGameButton.addEventListener('click', newGameHandler)
 
   displayMessage('press new game to begin')
 
