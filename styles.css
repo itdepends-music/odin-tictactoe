@@ -57,7 +57,7 @@ h1 {
 
 .playernames {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto auto;
   padding: 32px 0;
   grid-gap: 16px;
   align-items: center;
@@ -80,7 +80,7 @@ h1 {
 }
 
 .playernames button {
-  grid-column-end: span 2;
+  grid-column-end: span 4;
   cursor: pointer;
   margin: 2px;
   height: 26px;

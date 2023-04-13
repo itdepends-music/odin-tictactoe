@@ -11,7 +11,7 @@ const board = (() => {
   const playerTokens = ['X', 'O']
   let playerNames = ['Player 1', 'Player 2']
   let player = 0
-  const aiPlayers = [0] // placeholder until graphical interface supports AI
+  let aiPlayers = []
 
   const getBoard = () => {
     return boardArray.map(elem => [...elem]) // return deep copy of boardArray
@@ -90,7 +90,15 @@ const board = (() => {
     playerNames = [player1, player2]
   }
 
-  const newGame = (player1Name, player2Name) => {
+  const newGame = (player1Name, player2Name, AI1, AI2) => {
+    aiPlayers = []
+    if (AI1) {
+      aiPlayers.push(0)
+    }
+    if (AI2) {
+      aiPlayers.push(1)
+    }
+
     resetBoard()
     editPlayerNames(player1Name, player2Name)
     display.update()
@@ -212,13 +220,19 @@ const display = (() => {
     const player1Input = document.querySelector('#player1')
     const player2Input = document.querySelector('#player2')
 
+    const AI1Check = document.querySelector('#ai1')
+    const AI2Check = document.querySelector('#ai2')
+
+    const AI1 = AI1Check.checked
+    const AI2 = AI2Check.checked
+
     let player1Name = player1Input.value
     let player2Name = player2Input.value
 
     player1Name = player1Name === '' ? 'Player 1' : player1Name
     player2Name = player2Name === '' ? 'Player 2' : player2Name
 
-    board.newGame(player1Name, player2Name)
+    board.newGame(player1Name, player2Name, AI1, AI2)
   }
 
   newGameButton.addEventListener('click', newGameHandler)
