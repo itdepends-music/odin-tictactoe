@@ -11,6 +11,7 @@ const board = (() => {
   const playerTokens = ['X', 'O']
   let playerNames = ['Player 1', 'Player 2']
   let player = 0
+  const aiPlayers = [0] // placeholder until graphical interface supports AI
 
   const getBoard = () => {
     return boardArray.map(elem => [...elem]) // return deep copy of boardArray
@@ -26,6 +27,7 @@ const board = (() => {
     player = (player + 1) % 2
     display.update()
     checkWin()
+    handleAI()
   }
 
   const checkWin = () => {
@@ -92,11 +94,19 @@ const board = (() => {
     resetBoard()
     editPlayerNames(player1Name, player2Name)
     display.update()
+    handleAI()
   }
 
   const playAIMove = () => {
     const move = ai.playMove(getBoard(), playerTokens[player])
     playMove(move[0], move[1])
+  }
+
+  // This function calls playAIMove if appropriate
+  const handleAI = () => {
+    if (aiPlayers.includes(player)) {
+      playAIMove()
+    }
   }
 
   resetBoard()
