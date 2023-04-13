@@ -27,7 +27,6 @@ const board = (() => {
     player = (player + 1) % 2
     display.update()
     checkWin()
-    handleAI()
   }
 
   const checkWin = () => {
@@ -72,7 +71,10 @@ const board = (() => {
 
     if (isDraw) {
       handleWin(' ')
+      return
     }
+
+    handleAI()
   }
 
   const handleWin = playerToken => {
