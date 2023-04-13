@@ -197,11 +197,13 @@ const display = (() => {
   }
 
   const displayWin = playerName => {
-    if (playerName === 'draw') {
-      displayMessage('draw')
-    } else {
-      displayMessage(`${playerName} won!!`)
-    }
+    setTimeout(() => {
+      if (playerName === 'draw') {
+        displayMessage('draw')
+      } else {
+        displayMessage(`${playerName} won!!`)
+      }
+    }, 1000)
   }
 
   const newGameHandler = e => {
