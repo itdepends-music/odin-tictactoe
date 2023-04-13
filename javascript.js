@@ -94,18 +94,24 @@ const board = (() => {
     display.update()
   }
 
+  const playAIMove = () => {
+    const move = ai.playMove(getBoard(), playerTokens[player])
+    playMove(move[0], move[1])
+  }
+
   resetBoard()
 
   return {
     getBoard,
     playMove,
     resetBoard,
-    newGame
+    newGame,
+    playAIMove
   }
 })()
 
 const ai = (() => {
-  const playMove = boardArray => {
+  const playMove = (boardArray, token) => {
     const moves = getMoveList(boardArray)
     return moves[Math.floor(Math.random() * moves.length)]
   }
