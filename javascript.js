@@ -207,6 +207,10 @@ const display = (() => {
   }
 
   const displayWin = playerName => {
+    for (const elem of document.querySelectorAll('.square')) {
+      elem.disabled = true
+    }
+
     setTimeout(() => {
       if (playerName === 'draw') {
         displayMessage('draw')
