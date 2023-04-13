@@ -104,6 +104,29 @@ const board = (() => {
   }
 })()
 
+const ai = (() => {
+  const playMove = boardArray => {
+    const moves = getMoveList(boardArray)
+    return moves[Math.floor(Math.random() * moves.length)]
+  }
+
+  const getMoveList = boardArray => {
+    const moveList = []
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (boardArray[i][j] === ' ') {
+          moveList.push([i, j])
+        }
+      }
+    }
+
+    return moveList
+  }
+
+  return { playMove }
+})()
+
 const display = (() => {
   const boardDiv = document.querySelector('.board')
   const newGameButton = document.querySelector('#newgame')
