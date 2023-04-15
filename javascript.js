@@ -142,6 +142,7 @@ const ai = (() => {
       const copyArray = boardArray.map(elem => [...elem])
       copyArray[move[0]][move[1]] = token
       const value = miniMax(copyArray, token, otherToken, false)
+      console.log(value, move)
       moveList.push([value, move])
     }
 
@@ -153,27 +154,82 @@ const ai = (() => {
   }
 
   const miniMax = (boardArray, token, otherToken, isAITurn) => {
+    const gameState = getGameState(boardArray, token, otherToken)
+    if (gameState !== ' ') {
+      if (gameState === 'draw') {
+        return 0
+      } else if (gameState === token) {
+        return 1
+      } else if (gameState === otherToken) {
+        return -1
+      }
+    }
+
     if (isAITurn) {
-      let value = -Infinity
+      const values = []
       const moves = getMoveList(boardArray)
       for (const move of moves) {
         const copyArray = boardArray.map(elem => [...elem])
-        copyArray[move[0]][move[1]] = move
-        const curValue = miniMax(copyArray, token, otherToken, !isAITurn)
-        value = Math.max(value, curValue)
+        copyArray[move[0]][move[1]] = token
+        values.push(miniMax(copyArray, token, otherToken, !isAITurn))
       }
-      return value
+
+      return Math.max(...values)
     }
     if (!isAITurn) {
-      let value = Infinity
+      const values = []
       const moves = getMoveList(boardArray)
       for (const move of moves) {
         const copyArray = boardArray.map(elem => [...elem])
-        copyArray[move[0]][move[1]] = move
-        const curValue = miniMax(copyArray, token, otherToken, !isAITurn)
-        value = Math.min(value, curValue)
+        copyArray[move[0]][move[1]] = otherToken
+        values.push(miniMax(copyArray, token, otherToken, !isAITurn))
       }
-      return value
+      return Math.min(...values)
+    }
+  }
+
+  const getGameState = (boardArray, token, otherToken) => {
+    for (const tok of [token, otherToken]) {
+      let isTopLeftToBottomRight = true
+      let isTopRightToBottomLeft = true
+      for (let i = 0; i < 3; i++) {
+        if (boardArray[i][i] !== tok) {
+          isTopLeftToBottomRight = false
+        }
+        if (boardArray[i][2 - i] !== tok) {
+          isTopRightToBottomLeft = false
+        }
+
+        let isHorz = true
+        let isVert = true
+        for (let j = 0; j < 3; j++) {
+          if (boardArray[i][j] !== tok) {
+            isHorz = false
+          }
+          if (boardArray[j][i] !== tok) {
+            isVert = false
+          }
+        }
+        if (isHorz || isVert) {
+          return tok
+        }
+      }
+      if (isTopLeftToBottomRight || isTopRightToBottomLeft) {
+        return tok
+      }
+    }
+
+    let isDraw = true
+    for (const row of boardArray) {
+      for (const val of row) {
+        if (val === ' ') isDraw = false
+      }
+    }
+
+    if (isDraw) {
+      return 'draw'
+    } else {
+      return ' '
     }
   }
 
