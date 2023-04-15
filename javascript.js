@@ -153,7 +153,28 @@ const ai = (() => {
   }
 
   const miniMax = (boardArray, token, otherToken, isAITurn) => {
-    return Math.random()
+    if (isAITurn) {
+      let value = -Infinity
+      const moves = getMoveList(boardArray)
+      for (const move of moves) {
+        const copyArray = boardArray.map(elem => [...elem])
+        copyArray[move[0]][move[1]] = move
+        const curValue = miniMax(copyArray, token, otherToken, !isAITurn)
+        value = Math.max(value, curValue)
+      }
+      return value
+    }
+    if (!isAITurn) {
+      let value = Infinity
+      const moves = getMoveList(boardArray)
+      for (const move of moves) {
+        const copyArray = boardArray.map(elem => [...elem])
+        copyArray[move[0]][move[1]] = move
+        const curValue = miniMax(copyArray, token, otherToken, !isAITurn)
+        value = Math.min(value, curValue)
+      }
+      return value
+    }
   }
 
   const getMoveList = boardArray => {
