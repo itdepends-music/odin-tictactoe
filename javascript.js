@@ -108,7 +108,11 @@ const board = (() => {
   }
 
   const playAIMove = () => {
-    const move = ai.playMove(getBoard(), playerTokens[player])
+    const move = ai.playMove(
+      getBoard(),
+      playerTokens[player],
+      playerTokens[1 - player]
+    )
     playMove(move[0], move[1])
   }
 
@@ -131,9 +135,25 @@ const board = (() => {
 })()
 
 const ai = (() => {
-  const playMove = (boardArray, token) => {
+  const playMove = (boardArray, token, otherToken) => {
     const moves = getMoveList(boardArray)
-    return moves[Math.floor(Math.random() * moves.length)]
+    const moveList = []
+    for (const move of moves) {
+      const copyArray = boardArray.map(elem => [...elem])
+      copyArray[move[0]][move[1]] = token
+      const value = miniMax(copyArray, token, otherToken, false)
+      moveList.push([value, move])
+    }
+
+    console.log(moveList)
+    return moveList.reduce(
+      (max, current) => (max[0] >= current[0] ? max : current),
+      moveList[0]
+    )[1]
+  }
+
+  const miniMax = (boardArray, token, otherToken, isAITurn) => {
+    return Math.random()
   }
 
   const getMoveList = boardArray => {
