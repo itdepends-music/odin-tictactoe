@@ -142,7 +142,6 @@ const ai = (() => {
       const copyArray = boardArray.map(elem => [...elem])
       copyArray[move[0]][move[1]] = token
       const value = miniMax(copyArray, token, otherToken, false)
-      console.log(value, move)
       moveList.push([value, move])
     }
 
